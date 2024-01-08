@@ -1,7 +1,9 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from django.contrib.auth.models import User
 from django.contrib.auth import login
 from .models import Task
 from .serializers import TaskSerializer, UserRegistrationSerializer, UserLoginSerializer
@@ -9,6 +11,14 @@ from .serializers import TaskSerializer, UserRegistrationSerializer, UserLoginSe
 class TaskListCreateView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+class UserTasksView(generics.ListAPIView):
+    serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        user = get_object_or_404(User, id=user_id)
+        return Task.objects.filter(user=user)
 
 class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
