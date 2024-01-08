@@ -23,7 +23,7 @@ class Task(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('task_detail', args=[str(self.id)])
+        return reverse('details', args=[str(self.id)])
     
 class Photo(models.Model):
     task = models.ForeignKey(
