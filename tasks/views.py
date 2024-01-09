@@ -1,20 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-
 from django.db.models import F, Q
-
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from django.shortcuts import render, get_object_or_404, redirect
-
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
-
 from .serializers import TaskSerializer
 from .models import Task, Photo
 from .forms import TaskForm, PhotoForm
-
 
 class TaskListAPIView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
@@ -28,16 +22,13 @@ class TaskListAPIView(generics.ListCreateAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
-
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-
 
 class TaskListView(ListView):
     model = Task
@@ -83,12 +74,10 @@ class TaskListView(ListView):
 
         return queryset
 
-
 class TaskDetailView(DetailView):
     model = Task
     template_name = 'tasks/details.html'
     context_object_name = 'task'
-
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
@@ -100,19 +89,16 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-
 class TaskUpdateView(UpdateView):
     model = Task
     template_name = 'tasks/form.html'
     form_class = TaskForm
     success_url = reverse_lazy('list')
 
-
 class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'tasks/confirm_delete.html'
     success_url = reverse_lazy('list')
-
 
 def photo_to_task(request, pk):
     task = get_object_or_404(Task, pk=pk)
@@ -127,7 +113,6 @@ def photo_to_task(request, pk):
     else:
         form = PhotoForm()
     return render(request, 'tasks/add_photo.html', {'form': form})
-
 
 def delete_photo(request, pk):
     photo = get_object_or_404(Photo, pk=pk)

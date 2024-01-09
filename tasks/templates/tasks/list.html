@@ -1,3 +1,9 @@
+<style>
+  #search-input {
+    font-size: 12px;
+  }
+</style>
+
 {% extends 'base.html' %} {% block content %}
 
 <div class="text-center">
@@ -9,26 +15,32 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Image</th>
       <th>
-        <a class="inline" href="?order_by=title">Name</a>
-        <input type="text" id="search-input" placeholder="Search tasks" />
+        <a class="inline" href="?order_by=title">Title</a>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="eg. Ecommerce Backend"
+        />
       </th>
-      <th>Created</th>
-      <th>Due</th>
-      <th>Priority</th>
-      <th>Status</th>
+      <th>
+        <a class="inline" href="?order_by=created">Created</a>
+      </th>
+      <th>
+        <a class="inline" href="?order_by=due">Due</a>
+      </th>
+      <th>
+        <a class="inline" href="?order_by=priority">Priority</a>
+      </th>
+      <th>
+        <a class="inline" href="?order_by=status">Status</a>
+      </th>
     </tr>
   </thead>
 
   <tbody>
     {% for task in tasks %}
     <tr>
-      <td>
-        {% if task.photos.all %}
-        <img src="{{ task.photos.all.first.image.url }}" width="50" />
-        {% endif %}
-      </td>
       <td>
         <a href="{% url 'details' task.pk %}">{{ task.title }}</a>
       </td>

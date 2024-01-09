@@ -20,12 +20,8 @@ class TaskAdmin(admin.ModelAdmin):
         output_field=IntegerField(),
     ),)
 
-class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('task', 'image')
-
 admin.site.site_header = 'TM Admin'
 admin.site.site_title = 'TM Admin'
 admin.site.index_title = 'TM Admin'
 
 admin.site.register(Task, TaskAdmin)
-admin.site.register(Photo, PhotoAdmin)
