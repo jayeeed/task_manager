@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -19,11 +20,19 @@ class Task(models.Model):
     is_complete = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
+    def save(self, *args, **kwargs):
+        # Set creation_date to the local date-time when the entry is added
+        if not self.creation_date:
+            self.creation_date = timezone.now()
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('details', args=[str(self.id)])
+
     
 class Photo(models.Model):
     task = models.ForeignKey(
