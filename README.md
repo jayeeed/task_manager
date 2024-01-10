@@ -1,6 +1,12 @@
 <div align="center">
-<h1>Task Manager</h1>
-A Python-Django Task Manager Project with REST API 
+  <h1>Task Manager</h1>
+    A Python-Django Task Manager Project with REST API
+  <h3>Project Demo</h3>
+
+
+https://github.com/jayeeed/task_manager/assets/137998593/27c39555-7b63-4bf6-8ee6-c4d69f86d72f
+
+
 </div>
 
 ## Technology Used
